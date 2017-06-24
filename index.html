@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Vue</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</head>
+
+<body>
+<div class="container" id="app-demo" style="margin-top: 40px;">
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Vue Demo</h3>
+                        <button type="button" class="btn btn-info pull-right" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-plus"></i></button>
+                        <form action="" method="POST" role="form">
+                            <div class="form-group">
+                                <!-- <label for="">Search</label> -->
+                                <input type="text" class="form-control" id="" v-model="search" placeholder="Type content...">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Age</th>
+                                        <th>Class</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="(person, index) in searchs">
+                                        <td>{{ person.name }}</td>
+                                        <td>{{ person.age }}</td>
+                                        <td>{{ person.class }}</td>
+                                        <td>
+                                            <button type="buton" v-on:click="updateStudent(index)" class="btn btn-info" data-toggle="modal" data-target="#myModalu"><i class="glyphicon glyphicon-pencil"></i></button>
+                                            <button type="buton" v-on:click="deleteStudent(index)" class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Add students</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form action="" method="POST" role="form" v-on:submit.prevent="addStudent">
+                            <form action="" method="POST" role="form" v-on:submit.prevent="updateStudent">
+                                <div class="form-group">
+                                    <label for="">Name</label>
+                                    <input type="text" class="form-control" v-model="student.name" required="" id="" placeholder="Name...">
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Age</label>
+                                    <input type="number" class="form-control" v-model="student.age" id="" required="" placeholder="Age...">
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Class</label>
+                                    <input type="text" class="form-control"  v-model="student.class" required="" id="" placeholder="Class...">
+                                </div>
+                                <button type="submit"  class="btn btn-primary" >Add</button>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button"  class="btn btn-default" v-on:click="clearStudent" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="myModalu" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Update students</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form action="" method="POST" role="form" v-on:submit.prevent="updateStudent">
+                                <div class="form-group">
+                                    <label for="">Name</label>
+                                    <input type="text" class="form-control" v-model="student.name" required="" id="" placeholder="Name...">
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Age</label>
+                                    <input type="number" class="form-control" v-model="student.age" id="" required="" placeholder="Age...">
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Class</label>
+                                    <input type="text" class="form-control"  v-model="student.class" required="" id="" placeholder="Class...">
+                                </div>
+                                <button type="submit"  class="btn btn-primary" >Update</button>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button"  class="btn btn-default" v-on:click="clearStudent" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="https://unpkg.com/vue"></script>
+        <script>
+            var vue = new Vue({
+                el: '#app-demo',
+                data: {
+                    search: '',
+                    student: {
+                        id: 0,
+                        name: '',
+                        age: '',
+                        class: ''
+                    },
+                    people: [{
+                        name: 'Vu Van A',
+                        age: '20',
+                        class: '12B'
+                    }, {
+                        name: 'Vu Van B',
+                        age: '12',
+                        class: '12A'
+                    }, {
+                        name: 'Vu Van C',
+                        age: '14',
+                        class: '12E'
+                    }, {
+                        name: 'Vu Van D',
+                        age: '18',
+                        class: '12D'
+                    }, ],
+                },
+                methods: {
+                    addStudent: function() {
+                        if (this.people.push(this.student)) {
+
+                        }
+                    },
+                    clearStudent: function() {
+                        this.student = {
+                            id: '',
+                            name: '',
+                            age: '',
+                            class: ''
+                        };
+                    },
+                    deleteStudent: function(index) {
+                        delete this.people.splice(index,1);
+                    },
+                    updateStudent: function (index) {
+                        this.student = this.people[index];
+                        this.student.id = index;
+                    },
+                },
+                computed: {
+                    searchs: function (newsearch) {
+                        var da = [];
+                        var search = this.search;
+                        if (this.search != '') {
+                            this.people.forEach(function (item,index) {
+
+                                if (item.name.toLowerCase().indexOf(search.toLowerCase()) > -1 ) {
+                                    console.log(item.name.toLowerCase());
+                                    da.push(item);
+                                }
+                            });
+                            return da;
+                        } else {
+                            return this.people;
+                        }
+                    }
+                }
+            });
+            vue.people.push({
+                name: 'Vu Van E',
+                age: '22',
+                class: '12G'
+            });
+        </script>
+    </body>
+
+    </html>
